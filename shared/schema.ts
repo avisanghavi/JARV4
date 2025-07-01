@@ -8,6 +8,10 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
   name: text("name").notNull(),
   role: text("role").notNull().default("user"),
+  linkedinEmail: text("linkedin_email"),
+  linkedinPassword: text("linkedin_password"),
+  crmApiKey: text("crm_api_key"),
+  crmEndpoint: text("crm_endpoint"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
