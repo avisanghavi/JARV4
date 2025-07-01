@@ -1,0 +1,165 @@
+Pasted--HeyJarvis-Project-Setup-Instructions-You-are-setting-up-the-HeyJarvis-autonomous-orchestration-sy-1751311390945_1751311390947.txt
+# HeyJarvis Project Setup Instructions
+
+You are setting up the HeyJarvis autonomous orchestration system using this directory structure:
+
+heyjarvis/
+├── apps/
+│ ├── web/ # Next.js 14 (all frontend)
+│ ├── workers/ # All background jobs
+│ └── mobile/ # Future mobile app
+│
+├── packages/
+│ ├── core/ # Critical shared code
+│ │ ├── ai/ # LLM utils, prompts, chains
+│ │ ├── db/ # Supabase schema, types, client
+│ │ └── orchestration/ # Workflow engine
+│ │
+│ ├── domains/ # Domain-specific logic
+│ │ ├── sales/ # Lead scoring, outreach
+│ │ ├── marketing/ # Campaign logic, intel
+│ │ └── engineering/ # Site generation
+│ │
+│ └── libs/ # Pure utilities
+│ ├── scraping/ # LinkedIn/Gmail scrapers
+│ └── analytics/ # Tracking utils
+│
+└── config/ # ESLint, Tailwind, TS configs
+
+text
+
+## Core Requirements
+1. **Modular Architecture**: Implement domain-driven design with clear boundaries between sales/marketing/engineering
+2. **Human-in-the-Loop**: Approval workflows at critical points
+3. **Rapid MVP Focus**: Prioritize Week 1 sales workflow delivery
+4. **Autonomous Orchestration**: Cross-domain triggers and actions
+
+## Implementation Tasks
+
+### 🛠️ 1. Project Initialization
+- Create Turborepo monorepo with pnpm
+- Configure shared ESLint/Tailwind/TypeScript in `config/`
+- Set up Vercel for `apps/web` and Cloudflare Workers for `apps/workers`
+
+### 🌐 2. Apps Setup
+**`apps/web` (Next.js 14):**
+- Implement authentication (NextAuth.js)
+- Build dashboard routes:
+  - `/sales`: Lead review, campaign approval
+  - `/marketing`: Competitor Intel dashboard
+  - `/engineering`: Website builder UI
+  - `/orchestration`: Approval workflow interface
+
+**`apps/workers`:**
+- `sales-scraper`: Background job for LinkedIn/Gmail scraping
+- `outreach-sender`: Send approved messages with rate limiting
+- `intelligence-crawler`: Competitor monitoring
+
+### 📦 3. Packages Implementation
+**`packages/core/ai`:**
+- Implement prompt templates:
+// sales-outreach.ts
+export const SALES_PROMPT = Craft personalized outreach for {name} at {company} based on {recentActivity}...;
+
+text
+- Token cost optimization with model fallback
+
+**`packages/core/db` (Supabase):**
+- Define shared schema:
+CREATE TABLE leads (
+id UUID PRIMARY KEY,
+source VARCHAR(20) CHECK (source IN ('linkedin', 'hubspot', 'gmail')),
+status VARCHAR(20) DEFAULT 'pending'
+);
+
+text
+
+**`packages/core/orchestration`:**
+- Workflow engine with triggers:
+// triggers.ts
+export const TRIGGERS = {
+LEAD_APPROVED: 'sales/lead-approved',
+SITE_PUBLISHED: 'engineering/site-published'
+};
+
+text
+
+**`packages/domains/sales`:**
+- Lead scoring algorithm:
+def score_lead(lead):
+return (company_size * 0.4 + engagement * 0.6) > 80
+
+text
+- Outreach message generator using `core/ai`
+
+**`packages/domains/marketing`:**
+- Competitor monitoring via Similarweb API
+- Budget optimization engine
+
+**`packages/domains/engineering`:**
+- Website generator:
+generateSite({ industry, colorScheme, content }) => ReactComponent
+
+text
+- A/B testing framework
+
+**`packages/libs/scraping`:**
+- LinkedIn scraper with:
+- Randomized delays
+- Cookie rotation
+- Error handling for LinkedIn blocks
+
+### ✅ 4. User Story Implementation
+**Sales Workflow:**
+1. `libs/scraping` imports leads → `domains/sales` scores leads
+2. Web UI shows leads → Human approves messages
+3. `workers/outreach-sender` executes campaigns
+
+**Orchestration Flow:**
+graph LR
+A[Sales: New Conversion] --> B{Orchestration Engine}
+B --> C[Marketing: Retarget Campaign]
+B --> D[Engineering: Update CTAs]
+
+text
+
+**Marketing-Engineering Integration:**
+- When marketing detects high-converting content:
+// packages/domains/marketing
+trigger('ENG_UPDATE_CTA', { content: topPerformingContent });
+
+text
+
+### 🚀 5. Deployment Pipeline
+- Turborepo caching for:
+"pipeline": {
+"build": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
+"test": { "dependsOn": ["build"] }
+}
+
+text
+- Separate deployments:
+- Web: Vercel
+- Workers: Cloudflare
+- DB: Supabase
+
+## Critical Path Timeline
+| Day | Focus Area               | Deliverables                          |
+|-----|--------------------------|---------------------------------------|
+| 1   | Core Infrastructure      | Turborepo setup, shared configs      |
+| 2   | Sales Domain             | Lead scoring + outreach generation    |
+| 3   | Web UI                   | Sales dashboard + approval workflows  |
+| 4   | Workers                  | Scraping + sending implementation    |
+| 5   | Orchestration Engine     | Cross-domain trigger system           |
+| 6   | Marketing/Engineering    | Basic integration points              |
+| 7   | Deployment               | End-to-end sales MVP deployment       |
+
+## User Story Alignment
+- **Sales Stories**: Implemented in `domains/sales` + `web/sales` UI
+- **Orchestration Stories**: Core engine + `web/orchestration` UI
+- **Marketing Stories**: `domains/marketing` + competitive intel workers
+- **Engineering Stories**: `domains/engineering` + site builder UI
+
+Emphasize:
+1. Zero dependencies between domains initially
+2. API-first design for ...

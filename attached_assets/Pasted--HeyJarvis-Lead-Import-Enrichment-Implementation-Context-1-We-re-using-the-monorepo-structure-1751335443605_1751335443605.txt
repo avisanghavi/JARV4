@@ -1,0 +1,139 @@
+ HeyJarvis Lead Import & Enrichment Implementation
+
+## Context
+1. We're using the monorepo structure:
+   - `packages/libs/scraping` - for scraping tools
+   - `packages/core/db` - for database operations
+   - `packages/domains/sales` - for lead scoring
+   - `apps/web` - for UI components
+
+2. You have an existing LinkedIn scraper (`linkedin_scraper.py`) that:
+   - Handles login/cookie management
+   - Extracts profile data
+   - Navigates multi-page results
+   - Includes mutual connection logic
+
+## Implementation Tasks
+
+### 1. Integrate LinkedIn Scraper
+packages/libs/scraping/src/linkedin/linkedinScraper.ts
+import { LinkedInScraper } from './linkedin_scraper'; // Your existing Python scraper
+
+class LinkedInImportService {
+async getLeads(credentials: UserCredentials, searchParams: SearchParams): Promise<Lead[]> {
+const scraper = new LinkedInScraper();
+await scraper.login(credentials);
+return scraper.scrape_profiles(searchParams);
+}
+}
+
+text
+
+### 2. CSV Import Handler
+// packages/libs/scraping/src/csv/csvImporter.ts
+export class CsvImporter {
+static parse(file: File): Promise<Lead[]> {
+// Implementation for Gmail/Salesforce/HubSpot CSV formats
+}
+}
+
+text
+
+### 3. Lead Model & DB Operations
+// packages/core/db/src/models/lead.ts
+export interface Lead {
+id: string;
+source: 'linkedin' | 'gmail' | 'salesforce' | 'hubspot';
+name: string;
+company: string;
+title: string;
+profileUrl: string;
+recentActivity: string;
+score?: number;
+}
+
+text
+
+### 4. Enrichment Service
+// packages/domains/sales/src/leadEnrichment.ts
+export class LeadEnricher {
+static async enrich(lead: Lead): Promise<Lead> {
+// Add Clearbit/RocketReach API integration here
+return {
+...lead,
+company: lead.company || await fetchCompanyInfo(lead),
+recentActivity: lead.recentActivity || await fetchRecentActivity(lead)
+};
+}
+}
+
+text
+
+### 5. UI Components
+// apps/web/components/sales/LeadImport.tsx
+export function LeadImport() {
+// States: loading, progress, importedLeads
+return (
+<div>
+<LinkedInConnectButton onClick={connectLinkedIn} />
+<CsvUploader onUpload={handleCsvUpload} />
+<ProgressBar value={progress} />
+<LeadTable leads={leads} />
+</div>
+)
+}
+
+text
+
+### 6. API Endpoints
+// apps/web/app/api/leads/import/route.ts
+export async function POST(req: Request) {
+const { source, credentials, file } = await req.json();
+
+if (source === 'linkedin') {
+const leads = await LinkedInImportService.getLeads(credentials);
+return NextResponse.json(leads);
+}
+
+if (file) {
+const leads = await CsvImporter.parse(file);
+return NextResponse.json(leads);
+}
+}
+
+text
+
+## Critical Implementation Details
+
+1. **LinkedIn Integration**
+   - Use your existing scraper via Python bridge (python-shell)
+   - Add type definitions for its output
+   - Implement credential encryption
+
+2. **Progress Tracking**
+   - Use websockets for real-time import updates
+   - Implement progress stages: Authentication → Scraping → Enrichment → Saving
+
+3. **Error Handling**
+   - Special cases:
+     - LinkedIn rate limiting (retry with exponential backoff)
+     - CSV format detection
+     - Partial imports (save valid leads, report errors)
+
+4. **Performance**
+   - Implement web workers for CSV parsing
+   - Use streaming for large CSV files
+   - Add pagination to lead table
+
+## User Story Coverage
+
+| User Story | Implementation File |
+|------------|---------------------|
+| Connect LinkedIn | `LinkedInConnectButton.tsx` |
+| Upload CSV | `CsvUploader.tsx` |
+| Progress indicator | `ProgressBar.tsx` + websockets |
+| View imported leads | `LeadTable.tsx` |
+| Auto-enrich leads | `leadEnrichment.ts` |
+| Filter/sort leads | `LeadTable.tsx` (client-side sorting) |
+
+Start with the LinkedIn integration first since you already have the scraper. The UI components can be built while the scraping service is being integrated.
