@@ -41,16 +41,14 @@ export function Sidebar({ className }: SidebarProps) {
       
       <nav className="p-4 space-y-2">
         {/* Dashboard */}
-        <Link href="/">
-          <a className={cn(
-            "flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors",
-            isActive("/") 
-              ? "bg-primary/10 text-primary" 
-              : "text-gray-600 hover:bg-gray-50"
-          )}>
-            <BarChart3 className="w-5 h-5" />
-            <span>Dashboard</span>
-          </a>
+        <Link href="/" className={cn(
+          "flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors",
+          isActive("/") 
+            ? "bg-primary/10 text-primary" 
+            : "text-gray-600 hover:bg-gray-50"
+        )}>
+          <BarChart3 className="w-5 h-5" />
+          <span>Dashboard</span>
         </Link>
         
         {/* Sales Domain */}
@@ -59,27 +57,23 @@ export function Sidebar({ className }: SidebarProps) {
             <Handshake className="w-4 h-4" />
             <span>Sales</span>
           </div>
-          <Link href="/sales">
-            <a className={cn(
-              "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-              isActive("/sales") 
-                ? "bg-primary/10 text-primary" 
-                : "text-gray-600 hover:bg-gray-50"
-            )}>
-              <Users className="w-4 h-4" />
-              <span>Lead Management</span>
-            </a>
+          <Link href="/sales" className={cn(
+            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
+            isActive("/sales") 
+              ? "bg-primary/10 text-primary" 
+              : "text-gray-600 hover:bg-gray-50"
+          )}>
+            <Users className="w-4 h-4" />
+            <span>Lead Management</span>
           </Link>
-          <Link href="/sales/campaigns">
-            <a className={cn(
-              "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-              isActive("/sales/campaigns") 
-                ? "bg-primary/10 text-primary" 
-                : "text-gray-600 hover:bg-gray-50"
-            )}>
-              <Send className="w-4 h-4" />
-              <span>Outreach Campaigns</span>
-            </a>
+          <Link href="/sales/campaigns" className={cn(
+            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
+            isActive("/sales/campaigns") 
+              ? "bg-primary/10 text-primary" 
+              : "text-gray-600 hover:bg-gray-50"
+          )}>
+            <Send className="w-4 h-4" />
+            <span>Outreach Campaigns</span>
           </Link>
         </div>
         
@@ -89,27 +83,23 @@ export function Sidebar({ className }: SidebarProps) {
             <Megaphone className="w-4 h-4" />
             <span>Marketing</span>
           </div>
-          <Link href="/marketing">
-            <a className={cn(
-              "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-              isActive("/marketing") 
-                ? "bg-primary/10 text-primary" 
-                : "text-gray-600 hover:bg-gray-50"
-            )}>
-              <Search className="w-4 h-4" />
-              <span>Competitor Intel</span>
-            </a>
+          <Link href="/marketing" className={cn(
+            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
+            isActive("/marketing") 
+              ? "bg-primary/10 text-primary" 
+              : "text-gray-600 hover:bg-gray-50"
+          )}>
+            <Search className="w-4 h-4" />
+            <span>Competitor Intel</span>
           </Link>
-          <Link href="/marketing/budget">
-            <a className={cn(
-              "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-              isActive("/marketing/budget") 
-                ? "bg-primary/10 text-primary" 
-                : "text-gray-600 hover:bg-gray-50"
-            )}>
-              <DollarSign className="w-4 h-4" />
-              <span>Budget Optimization</span>
-            </a>
+          <Link href="/marketing/budget" className={cn(
+            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
+            isActive("/marketing/budget") 
+              ? "bg-primary/10 text-primary" 
+              : "text-gray-600 hover:bg-gray-50"
+          )}>
+            <DollarSign className="w-4 h-4" />
+            <span>Budget Optimization</span>
           </Link>
         </div>
         
@@ -119,54 +109,46 @@ export function Sidebar({ className }: SidebarProps) {
             <Code className="w-4 h-4" />
             <span>Engineering</span>
           </div>
-          <Link href="/engineering">
-            <a className={cn(
-              "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-              isActive("/engineering") 
-                ? "bg-primary/10 text-primary" 
-                : "text-gray-600 hover:bg-gray-50"
-            )}>
-              <Globe className="w-4 h-4" />
-              <span>Site Generator</span>
-            </a>
+          <Link href="/engineering" className={cn(
+            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
+            isActive("/engineering") 
+              ? "bg-primary/10 text-primary" 
+              : "text-gray-600 hover:bg-gray-50"
+          )}>
+            <Globe className="w-4 h-4" />
+            <span>Site Generator</span>
           </Link>
-          <Link href="/engineering/testing">
-            <a className={cn(
-              "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-              isActive("/engineering/testing") 
-                ? "bg-primary/10 text-primary" 
-                : "text-gray-600 hover:bg-gray-50"
-            )}>
-              <FlaskConical className="w-4 h-4" />
-              <span>A/B Testing</span>
-            </a>
+          <Link href="/engineering/testing" className={cn(
+            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
+            isActive("/engineering/testing") 
+              ? "bg-primary/10 text-primary" 
+              : "text-gray-600 hover:bg-gray-50"
+          )}>
+            <FlaskConical className="w-4 h-4" />
+            <span>A/B Testing</span>
           </Link>
         </div>
         
         {/* Orchestration */}
-        <Link href="/orchestration">
-          <a className={cn(
-            "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
-            isActive("/orchestration") 
-              ? "bg-primary/10 text-primary" 
-              : "text-gray-600 hover:bg-gray-50"
-          )}>
-            <Network className="w-5 h-5" />
-            <span>Orchestration</span>
-          </a>
+        <Link href="/orchestration" className={cn(
+          "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
+          isActive("/orchestration") 
+            ? "bg-primary/10 text-primary" 
+            : "text-gray-600 hover:bg-gray-50"
+        )}>
+          <Network className="w-5 h-5" />
+          <span>Orchestration</span>
         </Link>
         
         {/* Settings */}
-        <Link href="/settings">
-          <a className={cn(
-            "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
-            isActive("/settings") 
-              ? "bg-primary/10 text-primary" 
-              : "text-gray-600 hover:bg-gray-50"
-          )}>
-            <Settings className="w-5 h-5" />
-            <span>Settings</span>
-          </a>
+        <Link href="/settings" className={cn(
+          "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
+          isActive("/settings") 
+            ? "bg-primary/10 text-primary" 
+            : "text-gray-600 hover:bg-gray-50"
+        )}>
+          <Settings className="w-5 h-5" />
+          <span>Settings</span>
         </Link>
       </nav>
     </aside>
