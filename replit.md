@@ -46,7 +46,7 @@ The application is organized around three main business domains:
 - Automated triggers based on business events
 
 ### 3. AI Integration Layer
-- OpenAI GPT-4o integration for lead scoring and content generation
+- Anthropic Claude Sonnet 4 integration for lead scoring and content generation
 - Intelligent lead prioritization based on multiple factors
 - Automated outreach message personalization
 - Fallback mechanisms for AI service unavailability
