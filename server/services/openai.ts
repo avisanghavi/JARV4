@@ -108,7 +108,18 @@ Respond with JSON in this format:
         temperature: 0.7,
       });
 
-      const result = JSON.parse(response.content[0].type === 'text' ? response.content[0].text : "{}");
+      const rawText = response.content[0].type === 'text' ? response.content[0].text : "{}";
+      
+      // Clean up the response to extract JSON
+      let cleanedText = rawText.trim();
+      if (cleanedText.startsWith('```json')) {
+        cleanedText = cleanedText.replace(/```json\s*/, '').replace(/\s*```$/, '');
+      }
+      if (cleanedText.startsWith('```')) {
+        cleanedText = cleanedText.replace(/```\s*/, '').replace(/\s*```$/, '');
+      }
+      
+      const result = JSON.parse(cleanedText);
       return {
         subject: result.subject || "Partnership Opportunity",
         body: result.body || "Hi there, I'd love to connect about potential synergies between our companies.",
@@ -116,7 +127,12 @@ Respond with JSON in this format:
       };
     } catch (error) {
       console.error("Error generating outreach message:", error);
-      throw new Error("Failed to generate outreach message");
+      // Return a structured fallback instead of throwing
+      return {
+        subject: "Partnership Opportunity",
+        body: "Hi there, I'd love to connect about potential synergies between our companies.",
+        personalizedElements: ["Generic outreach due to AI parsing error"]
+      };
     }
   }
 
