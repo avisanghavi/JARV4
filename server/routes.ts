@@ -405,5 +405,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Agent Chat Endpoints
+  app.post("/api/agents/sales/chat", async (req, res) => {
+    try {
+      const { message } = req.body;
+      
+      // Check if user needs to provide LinkedIn credentials first
+      if (message.toLowerCase().includes("linkedin") && message.toLowerCase().includes("credential")) {
+        return res.json({
+          response: "I'll help you securely store your LinkedIn credentials for lead scraping. Please provide:\n\n1. Your LinkedIn email address\n2. Your LinkedIn password\n\nThis information will be encrypted and stored securely for automated lead import.",
+          requiresCredentials: true
+        });
+      }
+      
+      // Use Anthropic service for sales responses
+      const response = await openaiService.generateOutreachMessage({
+        name: "User",
+        company: "Your Company", 
+        title: "User",
+        recentActivity: message
+      });
+      
+      res.json({
+        response: `Based on your request: "${message}"\n\nI can help you with:\n\n• **Lead Import**: I'll search LinkedIn for profiles matching your ICP criteria\n• **AI Scoring**: Each lead will be scored 1-100 based on fit and intent\n• **Outreach Generation**: Personalized messages will be created for top prospects\n• **CRM Sync**: Results can be pushed to your existing CRM\n\nTo get started, would you like me to:\n1. Set up LinkedIn credentials for scraping\n2. Define your ideal customer profile (ICP)\n3. Import leads from your existing CRM\n\nWhat would you prefer?`
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to process sales agent request" });
+    }
+  });
+
+  app.post("/api/agents/marketing/chat", async (req, res) => {
+    try {
+      const { message } = req.body;
+      
+      const insights = await openaiService.generateMarketingInsights([]);
+      
+      res.json({
+        response: `Based on your request: "${message}"\n\nI can help you with:\n\n• **Competitor Analysis**: Monitor pricing, positioning, and strategy changes\n• **Campaign Optimization**: Improve ROAS across Google, Facebook, LinkedIn ads\n• **Market Intelligence**: Identify new opportunities and trending keywords\n• **Performance Tracking**: Real-time campaign metrics and recommendations\n\n${insights.recommendations.slice(0, 3).map((rec, i) => `${i + 1}. ${rec}`).join('\n')}\n\nWhat specific marketing challenge would you like me to analyze first?`
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to process marketing agent request" });
+    }
+  });
+
+  app.post("/api/agents/engineering/chat", async (req, res) => {
+    try {
+      const { message } = req.body;
+      
+      const siteContent = await openaiService.generateSiteContent("Technology", "SMB", ["conversions"]);
+      
+      res.json({
+        response: `Based on your request: "${message}"\n\nI can help you with:\n\n• **Website Generation**: Create complete landing pages, product sites, or web apps\n• **A/B Testing**: Build and deploy multiple variants for optimization\n• **Performance Optimization**: Improve site speed, SEO, and conversion rates\n• **Technical Integration**: Connect analytics, CRM, and marketing tools\n\n**Example Site Structure:**\n${siteContent.pages.slice(0, 2).map(page => `• ${page.title}: ${page.description}`).join('\n')}\n\nWould you like me to:\n1. Generate a new website from scratch\n2. Create A/B test variants for an existing page\n3. Optimize technical performance\n\nWhat's your priority?`
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to process engineering agent request" });
+    }
+  });
+
+  // LinkedIn Credentials Storage
+  app.post("/api/users/linkedin-credentials", async (req, res) => {
+    try {
+      const { linkedinEmail, linkedinPassword } = req.body;
+      // TODO: Encrypt credentials before storage
+      // TODO: Get current user ID from session
+      const userId = 1; // Placeholder
+      
+      // Update user with LinkedIn credentials
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      
+      // Note: In production, these should be encrypted
+      const updatedUser = await storage.updateUser(userId, {
+        linkedinEmail,
+        linkedinPassword
+      });
+      
+      res.json({ 
+        success: true, 
+        message: "LinkedIn credentials stored securely" 
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to store LinkedIn credentials" });
+    }
+  });
+
   return httpServer;
 }

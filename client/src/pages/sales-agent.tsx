@@ -5,7 +5,7 @@ import { apiRequest } from "@/lib/queryClient";
 export default function SalesAgent() {
   const salesAgentMutation = useMutation({
     mutationFn: async (message: string) => {
-      const response = await apiRequest(`/api/agents/sales/chat`, {
+      const response = await fetch(`/api/agents/sales/chat`, {
         method: "POST",
         body: JSON.stringify({ message }),
         headers: { "Content-Type": "application/json" },

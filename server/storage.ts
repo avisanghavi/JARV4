@@ -14,6 +14,7 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUser(id: number, user: Partial<InsertUser>): Promise<User | undefined>;
 
   // Leads
   getLeads(limit?: number, offset?: number): Promise<Lead[]>;
@@ -98,6 +99,10 @@ export class MemStorage implements IStorage {
       password: "admin123",
       name: "John Doe",
       role: "admin",
+      linkedinEmail: null,
+      linkedinPassword: null,
+      crmApiKey: null,
+      crmEndpoint: null,
       createdAt: new Date(),
     };
     this.users.set(defaultUser.id, defaultUser);
@@ -240,10 +245,35 @@ export class MemStorage implements IStorage {
     const user: User = {
       ...insertUser,
       id: this.currentUserId++,
+      role: insertUser.role || "user",
+      linkedinEmail: insertUser.linkedinEmail || null,
+      linkedinPassword: insertUser.linkedinPassword || null,
+      crmApiKey: insertUser.crmApiKey || null,
+      crmEndpoint: insertUser.crmEndpoint || null,
       createdAt: new Date(),
     };
     this.users.set(user.id, user);
     return user;
+  }
+
+  async updateUser(id: number, updateData: Partial<InsertUser>): Promise<User | undefined> {
+    const existingUser = this.users.get(id);
+    if (!existingUser) {
+      return undefined;
+    }
+
+    const updatedUser: User = {
+      ...existingUser,
+      ...updateData,
+      role: updateData.role || existingUser.role,
+      linkedinEmail: updateData.linkedinEmail !== undefined ? updateData.linkedinEmail : existingUser.linkedinEmail,
+      linkedinPassword: updateData.linkedinPassword !== undefined ? updateData.linkedinPassword : existingUser.linkedinPassword,
+      crmApiKey: updateData.crmApiKey !== undefined ? updateData.crmApiKey : existingUser.crmApiKey,
+      crmEndpoint: updateData.crmEndpoint !== undefined ? updateData.crmEndpoint : existingUser.crmEndpoint,
+    };
+
+    this.users.set(id, updatedUser);
+    return updatedUser;
   }
 
   // Leads
