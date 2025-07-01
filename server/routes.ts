@@ -455,7 +455,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const siteContent = await openaiService.generateSiteContent("Technology", "SMB", ["conversions"]);
       
       res.json({
-        response: `Based on your request: "${message}"\n\nI can help you with:\n\n• **Website Generation**: Create complete landing pages, product sites, or web apps\n• **A/B Testing**: Build and deploy multiple variants for optimization\n• **Performance Optimization**: Improve site speed, SEO, and conversion rates\n• **Technical Integration**: Connect analytics, CRM, and marketing tools\n\n**Example Site Structure:**\n${siteContent.pages.slice(0, 2).map(page => `• ${page.title}: ${page.description}`).join('\n')}\n\nWould you like me to:\n1. Generate a new website from scratch\n2. Create A/B test variants for an existing page\n3. Optimize technical performance\n\nWhat's your priority?`
+        response: `Based on your request: "${message}"\n\nI can help you with:\n\n• **Website Generation**: Create complete landing pages, product sites, or web apps\n• **A/B Testing**: Build and deploy multiple variants for optimization\n• **Performance Optimization**: Improve site speed, SEO, and conversion rates\n• **Technical Integration**: Connect analytics, CRM, and marketing tools\n\n**Site Content Examples:**\n• ${siteContent.headline}\n• ${siteContent.subheadline}\n• CTA: ${siteContent.ctaText}\n\nWould you like me to:\n1. Generate a new website from scratch\n2. Create A/B test variants for an existing page\n3. Optimize technical performance\n\nWhat's your priority?`
       });
     } catch (error) {
       res.status(500).json({ error: "Failed to process engineering agent request" });

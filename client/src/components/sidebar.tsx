@@ -13,7 +13,8 @@ import {
   Globe, 
   FlaskConical, 
   Network, 
-  Settings 
+  Settings,
+  TrendingUp
 } from "lucide-react";
 
 interface SidebarProps {
@@ -51,83 +52,38 @@ export function Sidebar({ className }: SidebarProps) {
           <span>Dashboard</span>
         </Link>
         
-        {/* Sales Domain */}
-        <div className="space-y-1">
-          <div className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700">
-            <Handshake className="w-4 h-4" />
-            <span>Sales</span>
-          </div>
-          <Link href="/sales" className={cn(
-            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-            isActive("/sales") 
-              ? "bg-primary/10 text-primary" 
-              : "text-gray-600 hover:bg-gray-50"
-          )}>
-            <Users className="w-4 h-4" />
-            <span>Lead Management</span>
-          </Link>
-          <Link href="/sales/campaigns" className={cn(
-            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-            isActive("/sales/campaigns") 
-              ? "bg-primary/10 text-primary" 
-              : "text-gray-600 hover:bg-gray-50"
-          )}>
-            <Send className="w-4 h-4" />
-            <span>Outreach Campaigns</span>
-          </Link>
-        </div>
+        {/* Sales Agent */}
+        <Link href="/sales-agent" className={cn(
+          "flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors",
+          isActive("/sales-agent") 
+            ? "bg-primary/10 text-primary" 
+            : "text-gray-600 hover:bg-gray-50"
+        )}>
+          <Handshake className="w-5 h-5" />
+          <span>Sales Agent</span>
+        </Link>
         
-        {/* Marketing Domain */}
-        <div className="space-y-1">
-          <div className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700">
-            <Megaphone className="w-4 h-4" />
-            <span>Marketing</span>
-          </div>
-          <Link href="/marketing" className={cn(
-            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-            isActive("/marketing") 
-              ? "bg-primary/10 text-primary" 
-              : "text-gray-600 hover:bg-gray-50"
-          )}>
-            <Search className="w-4 h-4" />
-            <span>Competitor Intel</span>
-          </Link>
-          <Link href="/marketing/budget" className={cn(
-            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-            isActive("/marketing/budget") 
-              ? "bg-primary/10 text-primary" 
-              : "text-gray-600 hover:bg-gray-50"
-          )}>
-            <DollarSign className="w-4 h-4" />
-            <span>Budget Optimization</span>
-          </Link>
-        </div>
+        {/* Marketing Agent */}
+        <Link href="/marketing-agent" className={cn(
+          "flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors",
+          isActive("/marketing-agent") 
+            ? "bg-primary/10 text-primary" 
+            : "text-gray-600 hover:bg-gray-50"
+        )}>
+          <TrendingUp className="w-5 h-5" />
+          <span>Marketing Agent</span>
+        </Link>
         
-        {/* Engineering Domain */}
-        <div className="space-y-1">
-          <div className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700">
-            <Code className="w-4 h-4" />
-            <span>Engineering</span>
-          </div>
-          <Link href="/engineering" className={cn(
-            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-            isActive("/engineering") 
-              ? "bg-primary/10 text-primary" 
-              : "text-gray-600 hover:bg-gray-50"
-          )}>
-            <Globe className="w-4 h-4" />
-            <span>Site Generator</span>
-          </Link>
-          <Link href="/engineering/testing" className={cn(
-            "flex items-center space-x-3 px-6 py-2 rounded-lg text-sm transition-colors",
-            isActive("/engineering/testing") 
-              ? "bg-primary/10 text-primary" 
-              : "text-gray-600 hover:bg-gray-50"
-          )}>
-            <FlaskConical className="w-4 h-4" />
-            <span>A/B Testing</span>
-          </Link>
-        </div>
+        {/* Engineering Agent */}
+        <Link href="/engineering-agent" className={cn(
+          "flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors",
+          isActive("/engineering-agent") 
+            ? "bg-primary/10 text-primary" 
+            : "text-gray-600 hover:bg-gray-50"
+        )}>
+          <Code className="w-5 h-5" />
+          <span>Engineering Agent</span>
+        </Link>
         
         {/* Orchestration */}
         <Link href="/orchestration" className={cn(

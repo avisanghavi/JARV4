@@ -5,7 +5,7 @@ import { apiRequest } from "@/lib/queryClient";
 export default function EngineeringAgent() {
   const engineeringAgentMutation = useMutation({
     mutationFn: async (message: string) => {
-      const response = await apiRequest(`/api/agents/engineering/chat`, {
+      const response = await fetch(`/api/agents/engineering/chat`, {
         method: "POST",
         body: JSON.stringify({ message }),
         headers: { "Content-Type": "application/json" },
