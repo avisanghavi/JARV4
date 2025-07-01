@@ -69,7 +69,7 @@ The application is organized around three main business domains:
 ### Core Dependencies
 - **@neondatabase/serverless**: PostgreSQL database connectivity
 - **drizzle-orm**: Type-safe database operations
-- **OpenAI**: AI-powered lead scoring and content generation
+- **Anthropic Claude**: AI-powered lead scoring and content generation
 - **@radix-ui components**: Accessible UI component primitives
 - **@tanstack/react-query**: Server state management
 
@@ -108,3 +108,4 @@ Preferred communication style: Simple, everyday language.
 
 Changelog:
 - July 01, 2025. Initial setup
+- July 01, 2025. Switched AI service from OpenAI to Anthropic Claude Sonnet 4 for all lead scoring, outreach generation, marketing insights, and website content creation
