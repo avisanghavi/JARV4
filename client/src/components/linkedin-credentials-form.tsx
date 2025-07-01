@@ -23,7 +23,10 @@ export function LinkedInCredentialsForm({ onCredentialsSaved }: LinkedInCredenti
       const response = await fetch("/api/users/linkedin-credentials", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify({
+          linkedinEmail: credentials.email,
+          linkedinPassword: credentials.password
+        }),
       });
       if (!response.ok) {
         throw new Error("Failed to save LinkedIn credentials");
