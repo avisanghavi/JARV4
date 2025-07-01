@@ -109,3 +109,6 @@ Preferred communication style: Simple, everyday language.
 Changelog:
 - July 01, 2025. Initial setup
 - July 01, 2025. Switched AI service from OpenAI to Anthropic Claude Sonnet 4 for all lead scoring, outreach generation, marketing insights, and website content creation
+- July 01, 2025. Complete architectural shift from dashboard-style interfaces to conversational AI agents for each domain
+- July 01, 2025. Added LinkedIn credential storage for future lead scraping capabilities
+- July 01, 2025. Created specialized chat interfaces for Sales, Marketing, and Engineering agents with real-time AI responses

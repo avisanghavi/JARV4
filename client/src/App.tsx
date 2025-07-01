@@ -13,6 +13,9 @@ import Dashboard from "@/pages/dashboard";
 import Sales from "@/pages/sales";
 import Marketing from "@/pages/marketing";
 import Engineering from "@/pages/engineering";
+import SalesAgent from "@/pages/sales-agent";
+import MarketingAgent from "@/pages/marketing-agent";
+import EngineeringAgent from "@/pages/engineering-agent";
 import Orchestration from "@/pages/orchestration";
 import NotFound from "@/pages/not-found";
 
@@ -88,6 +91,9 @@ function AppContent() {
           <Route path="/marketing/:tab?" component={Marketing} />
           <Route path="/engineering" component={Engineering} />
           <Route path="/engineering/:tab?" component={Engineering} />
+          <Route path="/sales-agent" component={SalesAgent} />
+          <Route path="/marketing-agent" component={MarketingAgent} />
+          <Route path="/engineering-agent" component={EngineeringAgent} />
           <Route path="/orchestration" component={Orchestration} />
           <Route component={NotFound} />
         </Switch>
