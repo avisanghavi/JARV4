@@ -1,8 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { ChatInterface } from "@/components/chat-interface";
+import { getAgentById } from "@/data/agents";
 import { apiRequest } from "@/lib/queryClient";
 
 export default function EngineeringAgent() {
+  const agent = getAgentById('edith');
   const engineeringAgentMutation = useMutation({
     mutationFn: async (message: string) => {
       const response = await fetch(`/api/agents/engineering/chat`, {

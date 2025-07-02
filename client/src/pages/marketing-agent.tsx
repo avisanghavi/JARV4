@@ -1,8 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { ChatInterface } from "@/components/chat-interface";
+import { getAgentById } from "@/data/agents";
 import { apiRequest } from "@/lib/queryClient";
 
 export default function MarketingAgent() {
+  const agent = getAgentById('mj');
   const marketingAgentMutation = useMutation({
     mutationFn: async (message: string) => {
       const response = await fetch(`/api/agents/marketing/chat`, {
@@ -29,8 +31,10 @@ export default function MarketingAgent() {
   return (
     <div className="h-full">
       <ChatInterface
-        agentName="Marketing Agent"
-        agentDescription="I help you analyze competitors, optimize campaigns, and discover market opportunities through AI-powered intelligence"
+        agentName={agent?.fullName || "Marketing Agent"}
+        agentDescription={agent?.description || "I help you analyze competitors, optimize campaigns, and discover market opportunities through AI-powered intelligence"}
+        agentAvatar={agent?.avatar}
+        agentColor={agent?.color}
         welcomeMessage="Hi! I'm your Marketing Agent. I can help you:
 
 • Analyze competitor strategies and pricing

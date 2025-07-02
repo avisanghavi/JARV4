@@ -15,6 +15,8 @@ export interface ChatMessage {
 interface ChatInterfaceProps {
   agentName: string;
   agentDescription: string;
+  agentAvatar?: string;
+  agentColor?: string;
   welcomeMessage: string;
   placeholder: string;
   onSendMessage: (message: string) => Promise<string>;
@@ -24,6 +26,8 @@ interface ChatInterfaceProps {
 export function ChatInterface({
   agentName,
   agentDescription,
+  agentAvatar,
+  agentColor,
   welcomeMessage,
   placeholder,
   onSendMessage,

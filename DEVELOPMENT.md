@@ -139,12 +139,12 @@ npm run db:push
 #### API Testing Examples
 ```bash
 # Test agent chat
-curl -X POST http://localhost:5000/api/agents/sales/chat \
+curl -X POST http://localhost:5173/api/agents/sales/chat \
   -H "Content-Type: application/json" \
   -d '{"message":"Help me with lead qualification"}'
 
 # Test dashboard stats
-curl http://localhost:5000/api/dashboard/stats
+curl http://localhost:5173/api/dashboard/stats
 
 # Test LinkedIn credentials
 curl -X POST http://localhost:5000/api/users/linkedin-credentials \

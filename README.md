@@ -81,7 +81,7 @@ npm run db:studio
 npm run dev
 ```
 
-The application will be available at `http://localhost:5000`
+The application will be available at `http://localhost:5173`
 
 ## Project Structure
 

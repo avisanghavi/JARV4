@@ -3,8 +3,10 @@ import { useState } from "react";
 import { ChatInterface } from "@/components/chat-interface";
 import { LinkedInCredentialsForm } from "@/components/linkedin-credentials-form";
 import { apiRequest } from "@/lib/queryClient";
+import { getAgentById } from "@/data/agents";
 
 export default function SalesAgent() {
+  const agent = getAgentById('alfred');
   const [showCredentialsForm, setShowCredentialsForm] = useState(false);
   const salesAgentMutation = useMutation({
     mutationFn: async (message: string) => {
@@ -50,8 +52,10 @@ export default function SalesAgent() {
   return (
     <div className="h-full">
       <ChatInterface
-        agentName="Sales Agent"
-        agentDescription="I help you find, score, and reach out to potential customers through LinkedIn and CRM automation"
+        agentName={agent?.fullName || "Sales Agent"}
+        agentDescription={agent?.description || "I help you find, score, and reach out to potential customers through LinkedIn and CRM automation"}
+        agentAvatar={agent?.avatar}
+        agentColor={agent?.color}
         welcomeMessage="Hi! I'm your Sales Agent. I can help you:
 
 • Find and import leads from LinkedIn based on your ICP
